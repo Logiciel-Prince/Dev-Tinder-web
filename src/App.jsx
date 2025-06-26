@@ -3,18 +3,22 @@ import "./App.css";
 import Body from "./layout/Body";
 import Login from "./layout/Login";
 import Profile from "./layout/Profile";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 function App() {
     return (
         <>
-            <BrowserRouter basename="/">
-                <Routes>
-                    <Route path="/" element={<Body />}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/profile" element={<Profile />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+            <Provider store={appStore}>
+                <BrowserRouter basename="/">
+                    <Routes>
+                        <Route path="/" element={<Body />}>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/profile" element={<Profile />} />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </Provider>
         </>
     );
 }
