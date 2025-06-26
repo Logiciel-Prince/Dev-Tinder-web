@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
     const { control, handleSubmit } = useForm({
@@ -19,8 +20,8 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(
-                "http://localhost:3000/auth/login",
+            const response = await axios.post( BASE_URL +
+                "/auth/login",
                 data,
                 { withCredentials: true }
             );
@@ -29,7 +30,6 @@ const Login = () => {
             navigate("/");
         } catch (error) {
             console.error("Login failed:", error);
-            // Handle error (e.g., show a notification)
         }
     };
 
