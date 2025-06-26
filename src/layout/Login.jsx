@@ -2,6 +2,9 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Input from "../components/Input";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { control, handleSubmit } = useForm({
@@ -11,6 +14,9 @@ const Login = () => {
         },
     });
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(
@@ -18,7 +24,9 @@ const Login = () => {
                 data,
                 { withCredentials: true }
             );
-            console.log("Login successful:", response.data);
+
+            dispatch(addUser(response.data.user));
+            navigate("/");
         } catch (error) {
             console.error("Login failed:", error);
             // Handle error (e.g., show a notification)
