@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Input from "../components/Input";
 import axios from "axios";
@@ -17,6 +17,7 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
     const onSubmit = async (data) => {
         try {
@@ -29,7 +30,7 @@ const Login = () => {
             dispatch(addUser(response.data.user));
             navigate("/");
         } catch (error) {
-            console.error("Login failed:", error);
+            setError(error.response?.data?.error || "Login failed");
         }
     };
 
@@ -95,6 +96,12 @@ const Login = () => {
                             </>
                         )}
                     />
+
+                    {error && (
+                        <span className="text-error text-sm mt-2">
+                            {error}
+                        </span>
+                    )}
                     <div className="card-actions justify-center mt-2">
                         <button
                             type="submit"
