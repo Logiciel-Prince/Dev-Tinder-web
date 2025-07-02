@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
+import Toast from "../components/Toast";
 
 const Requests = () => {
     const [requests, setRequests] = useState([]);
+    const [success, setSuccess] = useState("");
 
     useEffect(() => {
         fetchRequests();
@@ -19,6 +21,24 @@ const Requests = () => {
             console.log("Requests:", response?.data?.requests);
         } catch (error) {
             console.error("Error fetching connections:", error);
+        }
+    };
+
+    const reviewRequest = async (requestId, action) => {
+        try {
+            const response = await axios.post(BASE_URL + `/request/review/${action}/${          requestId}`,
+                {},
+                { withCredentials: true }
+            );
+
+            setSuccess(response?.data?.message);
+            setTimeout(() => {
+                setSuccess("");
+            }, 3000);
+
+            fetchRequests();
+        } catch (error) {
+            console.error("Error handling request:", error);
         }
     };
 
@@ -49,10 +69,14 @@ const Requests = () => {
                                     )}
                                     <p>{about || "No bio available"}</p>
                                     <div className="card-actions">
-                                        <button className="btn btn-secondary">
+                                        <button className="btn btn-secondary"
+                                            onClick={() => reviewRequest(user._id, "accepted")}
+                                        >
                                             Accept
                                         </button>
-                                        <button className="btn btn-primary">
+                                        <button className="btn btn-primary"
+                                            onClick={() => reviewRequest(user._id, "rejected")}
+                                        >
                                             Reject
                                         </button>
                                     </div>
@@ -64,6 +88,8 @@ const Requests = () => {
             ) : (
                 <p>No Request found.</p>
             )}
+
+            {success && <Toast success={success} />}
         </div>
     );
 };

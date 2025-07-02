@@ -6,6 +6,7 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import Toast from "./Toast";
 
 const EditProfile = ({ user }) => {
     const { control, handleSubmit, watch } = useForm({
@@ -234,11 +235,7 @@ const EditProfile = ({ user }) => {
                     />
                 </div>
             </div>
-            { success && <div className="toast toast-top toast-end">
-                <div className="alert alert-success">
-                    <span>{success}</span>
-                </div>
-            </div>}
+            { success && <Toast success={success}/>}
         </>
     );
 };
