@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Body from "./layout/Body";
 import Login from "./layout/Login";
+import SignUp from "./layout/SignUp";
 import Profile from "./layout/Profile";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
@@ -18,6 +19,7 @@ function App() {
                         <Route path="/" element={<Body />}>
                             <Route path="/" element={<Feed />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<SignUp />} />
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/connections" element={<Connections />} />
                             <Route path="/requests" element={<Requests />} />

@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
@@ -21,11 +21,9 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post( BASE_URL +
-                "/auth/login",
-                data,
-                { withCredentials: true }
-            );
+            const response = await axios.post(BASE_URL + "/auth/login", data, {
+                withCredentials: true,
+            });
 
             dispatch(addUser(response.data.user));
             navigate("/");
@@ -98,9 +96,7 @@ const Login = () => {
                     />
 
                     {error && (
-                        <span className="text-error text-sm mt-2">
-                            {error}
-                        </span>
+                        <span className="text-error text-sm mt-2">{error}</span>
                     )}
                     <div className="card-actions justify-center mt-2">
                         <button
@@ -109,6 +105,11 @@ const Login = () => {
                         >
                             Login
                         </button>
+
+                        <span className="text-sm text-center mt-2 text-gray-500">
+                            Don't have an account?
+                            <Link to="/signup" className="text-primary font-bold"> Sign Up</Link>
+                        </span>
                     </div>
                 </form>
             </div>
