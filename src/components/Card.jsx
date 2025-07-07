@@ -26,6 +26,9 @@ const Card = ({ user, className = "" }) => {
                 console.log("Request sent successfully:", res.data);
                 dispatch(removeUserFromFeed(userId));
                 setSuccess(res.data.message || "Request sent successfully");
+                setTimeout(() => {
+                    setSuccess("");
+                }, 3000);
             }
         } catch (error) {
             console.error("Error sending request:", error);
